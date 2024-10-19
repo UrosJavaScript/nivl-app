@@ -1,0 +1,1 @@
+Expo project with Redux store implementation. A text variable in the Redux store is updated via dispatch and displayed in five different places in the app. Includes a Home screen with a text input for modifying the variable.
