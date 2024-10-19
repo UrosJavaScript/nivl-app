@@ -1,11 +1,13 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
+import { Image, Platform, StyleSheet, TextInput } from 'react-native';
+import useTextStore from '@/hooks/useTextStore';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Collapsible } from '@/components/Collapsible';
+import ListDisplay from '@/components/home/ListDisplay';
 
 export default function HomeScreen() {
+  const { value, updateValue, loading, showAlert } = useTextStore();
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -16,90 +18,56 @@ export default function HomeScreen() {
         />
       }
     >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-      </ThemedView>
-
       <ThemedView style={styles.container}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-
-        <Collapsible title="More Information">
-          <ThemedText>
-            This is the expanded content when the collapsible is open.
+        <ThemedText
+          type="title"
+          style={{
+            paddingTop: 20,
+          }}
+        >
+          Welcome! {''}
+          <ThemedText
+            type="defaultSemiBold"
+            darkColor="#FFFF66"
+            style={{
+              textTransform: 'uppercase',
+            }}
+          >
+            {value}
           </ThemedText>
-        </Collapsible>
+        </ThemedText>
+        <ThemedText type="default">
+          Please enter text to update the displayed value:
+        </ThemedText>
 
-        <ThemedText>
-          Edit{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{' '}
-          to see changes. Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
+        <ThemedView
+          style={{
+            paddingTop: 10,
+            width: Platform.OS === 'web' ? '50%' : '100%',
+          }}
+        >
+          <TextInput
+            style={styles.input}
+            value={value}
+            onChangeText={(text) => updateValue(text)}
+            placeholder="Type here..."
+            placeholderTextColor="#B0B0B0"
+          />
+        </ThemedView>
       </ThemedView>
-      <ThemedView style={styles.container}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{' '}
-          to see changes. Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.container}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{' '}
-          to see changes. Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.container}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{' '}
-          to see changes. Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.container}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{' '}
-          to see changes. Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
+
+      <ListDisplay loading={loading} value={value} showAlert={showAlert} />
     </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
   container: {
-    gap: 8,
-    marginBottom: 8,
+    flexDirection: 'column',
+    alignItems: 'baseline',
+    flex: 1,
+    gap: 5,
+    paddingBottom: 30,
   },
   logo: {
     height: 220,
@@ -107,5 +75,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: 'absolute',
+  },
+  input: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#4FC3F7',
+    color: '#ffffff',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
   },
 });
