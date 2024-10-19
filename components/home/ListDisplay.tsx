@@ -41,7 +41,11 @@ const ListDisplay: React.FC<TextState> = ({ loading, value, showAlert }) => {
               </Collapsible>
 
               <TouchableOpacity
-                onPress={() => showAlert(value)}
+                onPress={() => {
+                  if (showAlert) {
+                    showAlert(value);
+                  }
+                }}
                 style={styles.button}
               >
                 <ThemedText

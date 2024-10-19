@@ -1,7 +1,7 @@
+import { Alert, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading, setValue } from '@/store/slices';
 import { AppDispatch, RootState } from '@/types';
-import { Alert, Platform } from 'react-native';
 
 const useTextStore = () => {
   const dispatch = useDispatch<AppDispatch>();

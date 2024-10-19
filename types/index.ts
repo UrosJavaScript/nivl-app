@@ -9,7 +9,7 @@ import {
 export interface TextState {
   value: string;
   loading: boolean;
-  showAlert: (value: string) => void;
+  showAlert?: (value: string) => void;
 }
 
 // A type for the overall state of the application
